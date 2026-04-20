@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
-import { fetchMovie } from '../actions/movieActions';
+import React, { useEffect, useState } from 'react';
+import { fetchMovie, submitReview } from '../actions/movieActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, ListGroup, ListGroupItem, Image } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Image, Form, Button } from 'react-bootstrap';
 import { BsStarFill } from 'react-icons/bs';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams } from 'react-router-dom';
 
 const MovieDetail = () => {
   const dispatch = useDispatch();
-  const { movieId } = useParams(); // Get movieId from URL parameters
+  const { movieId } = useParams();
   const selectedMovie = useSelector(state => state.movie.selectedMovie);
-  const loading = useSelector(state => state.movie.loading); // Assuming you have a loading state in your reducer
-  const error = useSelector(state => state.movie.error); // Assuming you have an error state in your reducer
+  const loading = useSelector(state => state.movie.loading);
+  const error = useSelector(state => state.movie.error);
+  const [reviewForm, setReviewForm] = useState({ review: '', rating: '' });
 
 
   useEffect(() => {
@@ -58,6 +59,34 @@ const MovieDetail = () => {
               {review.rating}
             </p>
           ))}
+        </Card.Body>
+        <Card.Body className="bg-dark text-light p-3">
+          <h5>Submit a Review</h5>
+          <Form onSubmit={(e) => {
+            e.preventDefault();
+            dispatch(submitReview({ movieId: selectedMovie._id, review: reviewForm.review, rating: Number(reviewForm.rating) }));
+            setReviewForm({ review: '', rating: '' });
+          }}>
+            <Form.Group className="mb-2">
+              <Form.Control
+                type="text"
+                placeholder="Write your review..."
+                value={reviewForm.review}
+                onChange={(e) => setReviewForm({ ...reviewForm, review: e.target.value })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-2">
+              <Form.Control
+                type="number"
+                placeholder="Rating (0-5)"
+                min="0"
+                max="5"
+                value={reviewForm.rating}
+                onChange={(e) => setReviewForm({ ...reviewForm, rating: e.target.value })}
+              />
+            </Form.Group>
+            <Button type="submit">Submit Review</Button>
+          </Form>
         </Card.Body>
       </Card>
     );
