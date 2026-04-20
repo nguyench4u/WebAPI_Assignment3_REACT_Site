@@ -3,7 +3,6 @@ import MovieHeader from './components/movieheader';
 import MovieList from './components/movielist';
 import Movie from './components/movie';
 import Authentication from './components/authentication';
-import Search from './components/search';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -21,8 +20,7 @@ function App() {
           <Route path="/" element={<PrivateRoute element={<MovieList />} />} />
           <Route path="/movielist" element={<PrivateRoute element={<MovieList />} />} />
           <Route path="/movie/:movieId" element={<PrivateRoute element={<Movie />} />} />
-          <Route path="/search" element={<PrivateRoute element={<Search />} />} />
-          <Route path="/signin" element={<Authentication />} />
+<Route path="/signin" element={<Authentication />} />
         </Routes>
       </HashRouter>
     </div>
