@@ -84,7 +84,7 @@ function MovieList() {
                             <Nav.Link as={Link} to={`/movie/${movie._id}`} onClick={() => handleClick(movie)}>
                                 <Image className="image" src={movie.imageUrl} thumbnail />
                             </Nav.Link>
-                            <Carousel.Caption>
+                            <Carousel.Caption style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '6px', padding: '8px 12px' }}>
                                 <h3>{movie.title}</h3>
                                 <BsStarFill /> {movie.avgRating} &nbsp;&nbsp; {movie.releaseDate}
                             </Carousel.Caption>
