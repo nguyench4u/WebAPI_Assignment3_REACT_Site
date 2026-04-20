@@ -4,6 +4,7 @@ import Login from './login';
 import Register from './register';
 import { logoutUser } from '../actions/authActions';
 import { Nav, Button } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
 
 const Authentication = () => {
   const [activeTab, setActiveTab] = useState('login');
@@ -47,7 +48,9 @@ const Authentication = () => {
     </div>
   );
 
-  return <div>{loggedIn ? userLoggedIn : userNotLoggedIn}</div>;
+  if (loggedIn) return <Navigate to="/movielist" replace />;
+
+  return <div>{userNotLoggedIn}</div>;
 };
 
 export default Authentication;

@@ -2,7 +2,8 @@ import constants from '../constants/actionTypes'
 
 let initialState = {
       movies: [],
-      selectedMovie: null
+      selectedMovie: null,
+      searchResults: []
 }
 
 const movieReducer = (state = initialState, action) => {
@@ -18,6 +19,9 @@ const movieReducer = (state = initialState, action) => {
                   return updated;
             case constants.FETCH_MOVIE:
                   updated['selectedMovie'] = action.selectedMovie;
+                  return updated;
+            case constants.SEARCH_MOVIES:
+                  updated['searchResults'] = action.movies;
                   return updated;
             default:
                   return state;

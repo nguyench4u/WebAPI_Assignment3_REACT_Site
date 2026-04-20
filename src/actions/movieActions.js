@@ -70,6 +70,26 @@ export function submitReview(review) {
     }
 }
 
+export function searchMovies(term) {
+    return dispatch => {
+        return fetch(`${env.REACT_APP_API_URL}/movies/search`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            mode: 'cors',
+            body: JSON.stringify({ search: term })
+        }).then((response) => {
+            if (!response.ok) throw Error(response.statusText);
+            return response.json();
+        }).then((res) => {
+            dispatch({ type: actionTypes.SEARCH_MOVIES, movies: res });
+        }).catch((e) => console.log(e));
+    }
+}
+
 export function fetchMovies() {
     return dispatch => {
         return fetch(`${env.REACT_APP_API_URL}/movies?reviews=true`, {
